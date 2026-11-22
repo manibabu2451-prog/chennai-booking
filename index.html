@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Service | Chennai Home Care Solutions</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f3f6f9;
+      color: #1f2937;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #0d47a1, #1976d2);
+      color: #ffffff;
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 13px;
+      opacity: 0.92;
+    }
+
+    .warranty-bar {
+      background: #e3f2fd;
+      color: #0d47a1;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid #bbdefb;
+    }
+
+    .form-body {
+      padding: 20px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .option-btn {
+      flex: 1 1 calc(50% - 8px);
+      padding: 11px 10px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #374151;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .option-btn.full-width {
+      flex: 1 1 100%;
+    }
+
+    .option-btn.active {
+      background: #e3f2fd;
+      border-color: #1976d2;
+      color: #0d47a1;
+      box-shadow: 0 2px 6px rgba(25, 118, 210, 0.15);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #1976d2;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 75px;
+    }
+
+    .error-msg {
+      color: #dc2626;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: none;
+      text-align: center;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #25d366;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #1ebe5d;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Chennai Home Care Solutions</h1>
+      <p>Quick AC & Washing Machine Service Booking</p>
+    </div>
+
+    <div class="warranty-bar">
+      ✅ 1-Month Service Warranty &nbsp;|&nbsp; 3-Month Genuine Spare Warranty
+    </div>
+
+    <div class="form-body">
+      <!-- 1. Appliance -->
+      <div class="section">
+        <div class="section-title">1. Select Appliance</div>
+        <div class="options-grid" id="appliance-options">
+          <div class="option-btn active" onclick="selectAppliance('AC', this)">❄️ AC</div>
+          <div class="option-btn" onclick="selectAppliance('Washing Machine', this)">🧺 Washing Machine</div>
+        </div>
+      </div>
+
+      <!-- 2. Issue -->
+      <div class="section">
+        <div class="section-title">2. Select Issue</div>
+        <div class="options-grid" id="issue-options"></div>
+      </div>
+
+      <!-- 3. Area -->
+      <div class="section">
+        <div class="section-title">3. Select Area</div>
+        <div class="options-grid" id="area-options">
+          <div class="option-btn" onclick="selectSingle('area', 'Ambattur', this)">Ambattur</div>
+          <div class="option-btn" onclick="selectSingle('area', 'Anna Nagar', this)">Anna Nagar</div>
+          <div class="option-btn" onclick="selectSingle('area', 'Ayappakkam', this)">Ayappakkam</div>
+          <div class="option-btn" onclick="selectSingle('area', 'Other Area', this)">Other Area</div>
+        </div>
+      </div>
+
+      <!-- 4. Preferred Time -->
+      <div class="section">
+        <div class="section-title">4. Preferred Time Slot</div>
+        <div class="options-grid" id="time-options">
+          <div class="option-btn full-width" onclick="selectSingle('time', 'Morning (9 AM - 12 PM)', this)">🌅 Morning (9 AM - 12 PM)</div>
+          <div class="option-btn full-width" onclick="selectSingle('time', 'Afternoon (12 PM - 4 PM)', this)">☀️ Afternoon (12 PM - 4 PM)</div>
+          <div class="option-btn full-width" onclick="selectSingle('time', 'Evening (4 PM - 8 PM)', this)">🌆 Evening (4 PM - 8 PM)</div>
+        </div>
+      </div>
+
+      <!-- 5. Customer Details -->
+      <div class="section">
+        <div class="section-title">5. Your Contact & Address</div>
+        <input type="text" id="cust-name" placeholder="Your Name *" required>
+        <textarea id="cust-address" placeholder="Full Address with Landmark *" required></textarea>
+        <input type="tel" id="cust-phone" placeholder="Alternate Phone Number (Optional)">
+      </div>
+
+      <div class="error-msg" id="error-msg">Please select Issue, Area, Time, and enter your Name & Address.</div>
+
+      <button class="submit-btn" onclick="bookOnWhatsApp()">
+        📲 Confirm Booking on WhatsApp
+      </button>
+
+      <div class="footer-note">Our service team will contact you shortly after booking.</div>
+    </div>
+  </div>
+
+  <script>
+    // 👇 INGA UNGA 10-DIGIT WHATSAPP BUSINESS NUMBER-A '91' ODA PODUNGA (Example: 919876543210)
+    const WHATSAPP_NUMBER = "917845645807";
+
+    const issuesByAppliance = {
+      "AC": [
+        "General Service / Jet Wash",
+        "Not Cooling / Gas Filling",
+        "Water Leakage",
+        "Installation / Uninstallation",
+        "Not Turning On / PCB Issue",
+        "Other AC Issue"
+      ],
+      "Washing Machine": [
+        "General Service",
+        "Not Spinning / Draining",
+        "Not Turning On",
+        "Water Leakage",
+        "Heavy Noise / Vibration",
+        "Other WM Issue"
+      ]
+    };
+
+    const bookingData = {
+      appliance: "AC",
+      issue: "",
+      area: "",
+      time: ""
+    };
+
+    function renderIssues(appliance) {
+      const container = document.getElementById("issue-options");
+      container.innerHTML = "";
+      bookingData.issue = "";
+
+      issuesByAppliance[appliance].forEach(issue => {
+        const btn = document.createElement("div");
+        btn.className = "option-btn";
+        btn.textContent = issue;
+        btn.onclick = () => selectSingle("issue", issue, btn);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectAppliance(value, el) {
+      bookingData.appliance = value;
+      document.querySelectorAll("#appliance-options .option-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      renderIssues(value);
+    }
+
+    function selectSingle(field, value, el) {
+      bookingData[field] = value;
+      el.parentElement.querySelectorAll(".option-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    function bookOnWhatsApp() {
+      const name = document.getElementById("cust-name").value.trim();
+      const address = document.getElementById("cust-address").value.trim();
+      const altPhone = document.getElementById("cust-phone").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+
+      if (!bookingData.issue || !bookingData.area || !bookingData.time || !name || !address) {
+        errorMsg.style.display = "block";
+        return;
+      }
+
+      errorMsg.style.display = "none";
+
+      let message = `Hello *Chennai Home Care Solutions*,\nI would like to book a service:\n\n`;
+      message += `🔧 *Appliance:* ${bookingData.appliance}\n`;
+      message += `⚠️ *Issue:* ${bookingData.issue}\n`;
+      message += `📍 *Area:* ${bookingData.area}\n`;
+      message += `⏰ *Preferred Time:* ${bookingData.time}\n`;
+      message += `👤 *Name:* ${name}\n`;
+      message += `🏠 *Address:* ${address}\n`;
+      if (altPhone) {
+        message += `📞 *Alt Phone:* ${altPhone}\n`;
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    // Default load AC issues
+    renderIssues("AC");
+  </script>
+
+</body>
+</html>
